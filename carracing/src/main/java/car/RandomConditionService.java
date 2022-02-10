@@ -12,7 +12,7 @@ public class RandomConditionService implements RandomCondition{
     // 자바 17 기능입니당
     // 네 0~9까지 뽑을수있어요
     @Override
-    public int makeRandomInt() {
-        return RANDOM_GENERATOR.nextInt(10);
+    public boolean getCondition() {
+        return RANDOM_GENERATOR.nextInt(10) >= 4;
     }
 }

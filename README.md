@@ -1,3 +1,3 @@
 # code_kata
 
-## READ ME 조금 수정!
+## READ ME 조금 수정!!
