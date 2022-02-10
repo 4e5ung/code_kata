@@ -35,5 +35,4 @@ src/main/webapp/node_modules/
 src/main/webapp/package-lock.json
 target/
 pom.xml.bak
-src/test/
 src/main/webapp/WEB-INF/spring/root-context.xml
