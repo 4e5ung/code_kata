@@ -3,7 +3,7 @@ package car;
 import java.util.List;
 
 public class RacingGame {
-    private RandomCondition randomCondition =new RandomConditionService();
+
     private final List<Car> cars;
 
     public RacingGame(List<Car> cars) {
@@ -17,11 +17,4 @@ public class RacingGame {
         return new RacingGame(cars);
     }
 
-    public void carMove(){
-        cars.forEach(car ->{
-          if (randomCondition.makeRandomInt() >= 4){
-              car.move();
-          }
-        });
-    }
 }
