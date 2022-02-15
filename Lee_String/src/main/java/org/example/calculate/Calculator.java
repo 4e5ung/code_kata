@@ -1,7 +1,6 @@
 package org.example.calculate;
 
 import java.util.Stack;
-import java.util.function.IntBinaryOperator;
 
 public class Calculator {
     private String stringValue;
