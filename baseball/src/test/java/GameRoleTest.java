@@ -1,4 +1,5 @@
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,6 +11,13 @@ import java.util.stream.Stream;
 
 public class GameRoleTest {
 
+    private GameRole gameRole;
+
+    @BeforeEach
+    void initGameRole(){
+        this.gameRole = GameRole.create();
+    }
+
     @Test
     void createGameRole(){
         Assertions.assertThatCode(() -> {GameRole.create();}).doesNotThrowAnyException();
@@ -18,7 +26,6 @@ public class GameRoleTest {
     @ParameterizedTest
     @MethodSource
     void getResult(List<Integer> player, List<Integer> computer, List<Integer> result){
-        GameRole gameRole = GameRole.create();
         Assertions.assertThat(gameRole.getResult(player, computer)).isEqualTo(result);
     }
 
@@ -32,7 +39,6 @@ public class GameRoleTest {
     @ParameterizedTest
     @MethodSource
     void getStrikeOfResult(List<Integer> result, int strike){
-        GameRole gameRole = GameRole.create();
         Assertions.assertThat(gameRole.getStrikeOfResult(result)).isEqualTo(strike);
     }
     static Stream<Arguments> getStrikeOfResult(){
@@ -45,7 +51,6 @@ public class GameRoleTest {
     @ParameterizedTest
     @MethodSource
     void getBallOfResult(List<Integer> result, int ball){
-        GameRole gameRole = GameRole.create();
         Assertions.assertThat(gameRole.getBallOfResult(result)).isEqualTo(ball);
     }
 
@@ -60,7 +65,6 @@ public class GameRoleTest {
     @ParameterizedTest
     @MethodSource
     void getGameStatus(List<Integer> result, boolean status){
-        GameRole gameRole = GameRole.create();
         Assertions.assertThat(gameRole.getGameStatus(result)).isEqualTo(status);
     }
 

@@ -4,9 +4,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class GameConsole {
-
-    private final static String MESSAGE_GAME_START = "숫자를 입력해주세요";
-    private final static String MESSAGE_COMPLETE_GAME = "개의 숫자를 모두 맞히셨습니다! 게임종료";
     private final Scanner console = new Scanner(System.in);
 
     public static GameConsole create() {
@@ -19,22 +16,26 @@ public class GameConsole {
                 .collect(Collectors.toList());
     }
 
-    public void printRequireInputMessage() {
-        System.out.println(MESSAGE_GAME_START + " : ");
+    public Integer reStartConsole() {
+        return this.console.nextInt();
     }
 
-    public void printCompleteGameMessage() {
-        System.out.println(MESSAGE_COMPLETE_GAME);
+    public void printInputMessage(String message) {
+        System.out.println(message + " : ");
+    }
+
+    public void printMessage(String message) {
+        System.out.println(message);
     }
 
     public void printGameResultMessage(int ballCount, int strikeCount) {
         StringBuilder gameResultMessage = new StringBuilder();
 
         if( ballCount > 0 )
-            gameResultMessage.append(ballCount).append(GameRoleType.BALL.getText()).append(" ");
+            gameResultMessage.append(ballCount).append(GameRoleResultType.BALL.getText()).append(" ");
 
         if( strikeCount > 0 )
-            gameResultMessage.append(strikeCount).append(GameRoleType.STRIKE.getText()).append(" ");
+            gameResultMessage.append(strikeCount).append(GameRoleResultType.STRIKE.getText()).append(" ");
 
         System.out.println(gameResultMessage.toString().trim());
     }

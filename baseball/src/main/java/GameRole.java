@@ -23,8 +23,8 @@ public class GameRole {
         // 스트라이크+볼
         ball = getStrikeBall(player, computer, ball);
 
-        result.add(GameRoleType.BALL.getStatus(), Math.abs(strike-ball));
-        result.add(GameRoleType.STRIKE.getStatus(), strike);
+        result.add(GameRoleResultType.BALL.getStatus(), Math.abs(strike-ball));
+        result.add(GameRoleResultType.STRIKE.getStatus(), strike);
 
         return result;
     }
@@ -51,14 +51,14 @@ public class GameRole {
     }
 
     public int getBallOfResult(List<Integer> result) {
-        return result.get(GameRoleType.BALL.getStatus());
+        return result.get(GameRoleResultType.BALL.getStatus());
     }
 
     public int getStrikeOfResult(List<Integer> result) {
-        return result.get(GameRoleType.STRIKE.getStatus());
+        return result.get(GameRoleResultType.STRIKE.getStatus());
     }
 
     public boolean getGameStatus(List<Integer> result){
-        return result.get(GameRoleType.STRIKE.getStatus()) == FINISHED_STRIKE_COUNT;
+        return result.get(GameRoleResultType.STRIKE.getStatus()) == FINISHED_STRIKE_COUNT;
     }
 }

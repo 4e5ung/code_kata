@@ -1,10 +1,16 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class ComputerTest {
-    Computer computer = Computer.create(new RandomValueGenerator());
+    private Computer computer;
+
+    @BeforeEach
+    void initComputer(){
+        this.computer = Computer.create(new RandomValueGenerator());
+    }
 
     @Test
     void createComputer(){
