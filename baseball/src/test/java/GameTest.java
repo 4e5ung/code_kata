@@ -1,0 +1,20 @@
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.List;
+import java.util.stream.Stream;
+
+public class GameTest {
+
+    @Test
+    void createGame() {
+        // 게임 인스턴스의 생성 검증
+        Assertions.assertThatCode(() -> {
+            Game.create(Player.create(), Computer.create(new RandomValueGenerator()), GameRole.create(), GameConsole.create());}).doesNotThrowAnyException();
+    }
+
+
+}
