@@ -2,7 +2,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Game {
-
     private final Integer RESTART_GAME = 1;
     private final Integer FINISHED_GAME = 2;
 
@@ -23,7 +22,6 @@ public class Game {
     }
 
     public void start() {
-
         boolean finished = false;
 
         do {

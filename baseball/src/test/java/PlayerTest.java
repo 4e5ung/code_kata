@@ -1,5 +1,8 @@
 import org.assertj.core.api.Assertions;
+<<<<<<< HEAD
 import org.junit.jupiter.api.BeforeEach;
+=======
+>>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,6 +14,7 @@ import java.util.stream.Stream;
 
 public class PlayerTest {
 
+<<<<<<< HEAD
     private Player player;
 
     @BeforeEach
@@ -18,6 +22,8 @@ public class PlayerTest {
         this.player = Player.create();
     }
 
+=======
+>>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
     @DisplayName("플레이어 인스턴스 생성")
     @Test
     void createPlayer() {
