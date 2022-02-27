@@ -1,8 +1,5 @@
 import org.assertj.core.api.Assertions;
-<<<<<<< HEAD
 import org.junit.jupiter.api.BeforeEach;
-=======
->>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -13,8 +10,6 @@ import java.util.stream.Stream;
 
 
 public class GameRoleTest {
-
-<<<<<<< HEAD
     private GameRole gameRole;
 
     @BeforeEach
@@ -22,8 +17,6 @@ public class GameRoleTest {
         this.gameRole = GameRole.create();
     }
 
-=======
->>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
     @Test
     void createGameRole(){
         Assertions.assertThatCode(() -> {GameRole.create();}).doesNotThrowAnyException();
@@ -32,10 +25,6 @@ public class GameRoleTest {
     @ParameterizedTest
     @MethodSource
     void getResult(List<Integer> player, List<Integer> computer, List<Integer> result){
-<<<<<<< HEAD
-=======
-        GameRole gameRole = GameRole.create();
->>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
         Assertions.assertThat(gameRole.getResult(player, computer)).isEqualTo(result);
     }
 
@@ -49,10 +38,6 @@ public class GameRoleTest {
     @ParameterizedTest
     @MethodSource
     void getStrikeOfResult(List<Integer> result, int strike){
-<<<<<<< HEAD
-=======
-        GameRole gameRole = GameRole.create();
->>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
         Assertions.assertThat(gameRole.getStrikeOfResult(result)).isEqualTo(strike);
     }
     static Stream<Arguments> getStrikeOfResult(){
@@ -65,10 +50,6 @@ public class GameRoleTest {
     @ParameterizedTest
     @MethodSource
     void getBallOfResult(List<Integer> result, int ball){
-<<<<<<< HEAD
-=======
-        GameRole gameRole = GameRole.create();
->>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
         Assertions.assertThat(gameRole.getBallOfResult(result)).isEqualTo(ball);
     }
 
@@ -83,10 +64,6 @@ public class GameRoleTest {
     @ParameterizedTest
     @MethodSource
     void getGameStatus(List<Integer> result, boolean status){
-<<<<<<< HEAD
-=======
-        GameRole gameRole = GameRole.create();
->>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
         Assertions.assertThat(gameRole.getGameStatus(result)).isEqualTo(status);
     }
 

@@ -1,9 +1,5 @@
 import org.assertj.core.api.Assertions;
-<<<<<<< HEAD
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-=======
->>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,8 +12,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class GameConsoleTest {
-
-<<<<<<< HEAD
     private GameConsole gameConsole;
 
     @BeforeEach
@@ -25,8 +19,6 @@ public class GameConsoleTest {
         this.gameConsole = GameConsole.create();
     }
 
-=======
->>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
     @Test
     void createGameConsole() {
         Assertions.assertThatCode(() -> {GameConsole.create();}).doesNotThrowAnyException();
@@ -37,7 +29,6 @@ public class GameConsoleTest {
     void startConsole(Integer value){
         InputStream in = generateUserInput(Integer.toString(value));
         System.setIn(in);
-<<<<<<< HEAD
         Assertions.assertThat(gameConsole.create().startConsole().size()).isEqualTo(3);
 
     }
@@ -48,16 +39,12 @@ public class GameConsoleTest {
         InputStream in = generateUserInput(Integer.toString(value));
         System.setIn(in);
         Assertions.assertThat(GameConsole.create().reStartConsole()).isEqualTo(value);
-=======
-        Assertions.assertThat(GameConsole.create().startConsole().size()).isEqualTo(3);
->>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
 
     }
 
     public static InputStream generateUserInput(String input) {
         return new ByteArrayInputStream(input.getBytes());
     }
-<<<<<<< HEAD
 
     @ParameterizedTest
     @MethodSource
@@ -88,6 +75,4 @@ public class GameConsoleTest {
                         GameRoleConsoleType.MESSAGE_GAME_RESTART.getText())
         );
     }
-=======
->>>>>>> 1124c5f8973cd06016e765c04dd11d12292643f3
 }
