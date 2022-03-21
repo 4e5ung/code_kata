@@ -59,6 +59,6 @@ public class GameRole {
     }
 
     public boolean getGameStatus(List<Integer> result){
-        return result.get(GameRoleResultType.STRIKE.getStatus()) == FINISHED_STRIKE_COUNT;
+        return Objects.equals(result.get(GameRoleResultType.STRIKE.getStatus()), FINISHED_STRIKE_COUNT);
     }
 }
