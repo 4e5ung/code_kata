@@ -1,6 +1,7 @@
 package com.github.prgrms.review.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 public class Review {
     @Id
     @Column(name = "seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "review_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
     @Column(name = "user_seq", nullable = false)
@@ -31,14 +32,13 @@ public class Review {
     private String content;
 
     @Column(name = "create_at")
+    @CreationTimestamp
     private LocalDateTime createAt;
 
     @Builder
-    public Review(Long seq, Long userSeq, Long productId, String content, LocalDateTime createAt) {
-      this.seq = seq;
+    public Review(Long userSeq, Long productId, String content) {
       this.userSeq = userSeq;
       this.productId = productId;
       this.content = content;
-      this.createAt = createAt;
-    }
+    };
 }

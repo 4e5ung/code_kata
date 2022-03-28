@@ -37,41 +37,26 @@ public class OrderService {
                 .collect(toList());
     }
 
-
     @Transactional(readOnly = true)
-    public OrderResponse findBySeqAndUserSeq(Long userSeq, Long orderId) {
+    public OrderResponse findByUserSeqAndSeq(Long userSeq, Long orderId) {
         checkNotNull(userSeq, "userSeq must be provided");
         checkNotNull(orderId, "orderId must be provided");
 
         return orderRepository.findByUserSeqAndSeq(userSeq, orderId)
                 .map(OrderResponse::of)
-                    .orElseThrow(() -> new NotFoundException("Could not found order for " + orderId));
-    }
-
-
-    @Transactional(readOnly = true)
-    public Optional<Order> findById(Long userSeq, Long orderId) {
-        checkNotNull(orderId, "orderId must be provided");
-
-        return orderRepository.findByUserSeqAndId(userSeq, orderId);
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<Order> findByReviewSeq(Long userSeq, Long reviewSeq) {
-        checkNotNull(reviewSeq, "reviewSeq must be provided");
-
-        return orderRepository.findByUserSeqAndReviewSeq(userSeq, reviewSeq);
+                .orElseThrow(
+                        () -> new IllegalArgumentException("Could not found order for " + orderId)
+                );
     }
 
     @Transactional()
     public boolean updateAccepted(Long userSeq, Long orderId){
-        Order order = orderRepository.findByUserSeqAndId(userSeq, orderId).orElseThrow(
-                () -> new NotFoundException("not found")
-        );
+        Order order = orderRepository.findByUserSeqAndSeq(userSeq, orderId)
+                .orElseThrow(
+                        () -> new NotFoundException("not found")
+                );
 
-
-
-        if(order.getState() == OrderStatus.COMPLETED ){
+        if(order.getState() == OrderStatus.REQUESTED ){
             order.setState(OrderStatus.ACCEPTED);
             return true;
         }
@@ -80,12 +65,13 @@ public class OrderService {
     }
 
     @Transactional()
-    public boolean updateShipping(Long orderId){
-        Order order = orderRepository.findById(orderId).orElseThrow(
-                () -> new IllegalArgumentException()
-        );
+    public boolean updateShipping(Long userSeq, Long orderId){
+        Order order = orderRepository.findByUserSeqAndSeq(userSeq, orderId)
+                .orElseThrow(
+                        () -> new NotFoundException("not found")
+                );
 
-        if(Objects.equals(order.getState(), OrderStatus.ACCEPTED)){
+        if(order.getState() == OrderStatus.ACCEPTED ){
             order.setState(OrderStatus.SHIPPING);
             return true;
         }
@@ -94,12 +80,13 @@ public class OrderService {
     }
 
     @Transactional()
-    public boolean updateComplete(Long orderId){
-        Order order = orderRepository.findById(orderId).orElseThrow(
-                () -> new IllegalArgumentException()
-        );
+    public boolean updateComplete(Long userSeq, Long orderId){
+        Order order = orderRepository.findByUserSeqAndSeq(userSeq, orderId)
+                .orElseThrow(
+                        () -> new NotFoundException("not found")
+                );
 
-        if(Objects.equals(order.getState(), OrderStatus.SHIPPING)){
+        if(order.getState() == OrderStatus.SHIPPING ){
             order.setState(OrderStatus.COMPLETED);
             order.setCompletedAt(now());
             return true;
@@ -109,12 +96,13 @@ public class OrderService {
     }
 
     @Transactional()
-    public boolean updateReject(Long orderId, String message){
-        Order order = orderRepository.findById(orderId).orElseThrow(
-                () -> new IllegalArgumentException()
-        );
+    public boolean updateReject(Long userSeq, Long orderId, String message){
+        Order order = orderRepository.findByUserSeqAndSeq(userSeq, orderId)
+                .orElseThrow(
+                        () -> new NotFoundException("not found")
+                );
 
-        if(Objects.equals(order.getState(), OrderStatus.REQUESTED)){
+        if(order.getState() == OrderStatus.REQUESTED ){
             order.setState(OrderStatus.REJECTED);
             order.setRejectedAt(now());
             order.setRejectMessage(message);

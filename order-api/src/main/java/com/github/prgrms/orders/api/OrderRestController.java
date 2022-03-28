@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.github.prgrms.utils.ApiUtils.ApiResult;
@@ -38,7 +39,7 @@ public class OrderRestController {
             @AuthenticationPrincipal JwtAuthentication authentication,
             @PathVariable(name = "id") Long orderId){
 
-        return success(orderService.findBySeqAndUserSeq(authentication.id, orderId));
+        return success(orderService.findByUserSeqAndSeq(authentication.id, orderId));
     }
 
     @PatchMapping(path = "{id}/accept")
@@ -56,21 +57,19 @@ public class OrderRestController {
     @PatchMapping(path = "{id}/complete")
     public ApiResult<Boolean> complete(@AuthenticationPrincipal JwtAuthentication authentication,
                                        @PathVariable(name = "id") Long orderId){
-
         return success(orderService.updateComplete(authentication.id, orderId));
     }
 
 
     @PatchMapping(path = "{id}/reject")
-    public ApiResult reject(
+    public ApiResult<Boolean> reject(
             @AuthenticationPrincipal JwtAuthentication authentication,
             @PathVariable(name = "id") Long orderId,
-            @RequestBody @Nullable OrderRejectRequest orderRejectRequest
-    ) throws MethodArgumentNotValidException {
-
-//        if( orderRejectRequest == null )
-//            throw new MethodArgumentNotValidException(null, null);
-
-        return success(orderService.updateReject(authentication.id, orderId, orderRejectRequest.getMessage()));
+            @Valid @RequestBody OrderRejectRequest orderRejectRequest){
+        return success(orderService.updateReject(
+                authentication.id,
+                orderId,
+                orderRejectRequest.getMessage()
+        ));
     }
 }

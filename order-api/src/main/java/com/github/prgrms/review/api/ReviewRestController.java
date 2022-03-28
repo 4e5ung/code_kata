@@ -3,11 +3,15 @@ package com.github.prgrms.review.api;
 import com.github.prgrms.orders.model.request.OrderRejectRequest;
 import com.github.prgrms.review.model.dto.ReviewDto;
 import com.github.prgrms.review.model.request.ReviewRequest;
+import com.github.prgrms.review.model.response.ReviewResponse;
 import com.github.prgrms.review.service.ReviewService;
+import com.github.prgrms.security.token.JwtAuthentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.github.prgrms.utils.ApiUtils.success;
@@ -25,14 +29,14 @@ public class ReviewRestController {
     }
 
     @PostMapping(path = "{id}/review")
-    public ApiResult review(@PathVariable Long id, @RequestBody @Nullable ReviewRequest reviewRequest) throws MethodArgumentNotValidException {
+    public ApiResult<ReviewResponse> review(@AuthenticationPrincipal JwtAuthentication authentication,
+                                            @PathVariable(name="id") Long orderId,
+                                            @Valid @RequestBody ReviewRequest reviewRequest){
 
-        if( reviewRequest.getContent() == null )
-            throw new MethodArgumentNotValidException(null, null);
-
-        if( reviewRequest.getContent().length() > 1000 )
-            throw new IllegalStateException(null, null);
-
-        return success(reviewService.updateReview(id, reviewRequest.getContent()));
+        return success(reviewService.updateReview(
+                authentication.id,
+                orderId,
+                reviewRequest.getContent())
+        );
     }
 }

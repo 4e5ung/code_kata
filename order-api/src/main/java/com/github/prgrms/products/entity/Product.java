@@ -67,7 +67,7 @@ import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
     return Objects.equals(seq, product.seq);
   }
 
-
-
-
+  public void addReviewCount() {
+    this.reviewCount++;
+  }
 }

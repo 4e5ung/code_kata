@@ -1,10 +1,14 @@
 package com.github.prgrms.review.service;
 
+import com.github.prgrms.errors.NotFoundException;
 import com.github.prgrms.orders.entity.Order;
+import com.github.prgrms.orders.model.enums.OrderStatus;
 import com.github.prgrms.orders.repository.OrderRepository;
 import com.github.prgrms.products.entity.Product;
 import com.github.prgrms.products.repository.ProductRepository;
 import com.github.prgrms.review.entity.Review;
+import com.github.prgrms.review.model.request.ReviewRequest;
+import com.github.prgrms.review.model.response.ReviewResponse;
 import com.github.prgrms.review.repository.ReviewRepository;
 import com.github.prgrms.utils.ApiUtils;
 import org.springframework.stereotype.Service;
@@ -38,35 +42,30 @@ public class ReviewService {
     }
 
     @Transactional()
-    public boolean updateReview(Long reviewSeq, String content) throws MethodArgumentNotValidException {
-//        Review review = reviewRepository.findById(reviewSeq).orElseThrow(
-//                () -> new IllegalArgumentException()
-//        );
+    public ReviewResponse updateReview(Long userSeq, Long orderId, String content){
+        Order order = orderRepository.findByUserSeqAndSeq(userSeq, orderId)
+                .orElseThrow(
+                        () -> new NotFoundException("not found")
+                );
 
-//        Order order = orderRepository.findByUserSeqAndReviewSeq(reviewSeq).orElseThrow(
-//                () -> new IllegalArgumentException()
-//        );
+        if(order.getState() == OrderStatus.COMPLETED ){
+            if (order.getReviewSeq() != null) {
+                throw new IllegalStateException();
+            }
 
-        if( !order.getState().equals("COMPLETED") ){
-            throw new MethodArgumentNotValidException(null, null);
+            Review review = reviewRepository.save(Review.builder()
+                    .content(content)
+                    .productId(order.getProductId())
+                    .userSeq(userSeq)
+                    .build());
+
+            order.setReviewSeq(review.getSeq());
+            order.setReview(review);
+            order.getProduct().addReviewCount();
+
+            return ReviewResponse.of(review);
+        }else {
+            throw new IllegalStateException();
         }
-
-        if( order.getReview() != null ){
-            throw new IllegalStateException(null, null);
-        }
-
-        order.getReview().setSeq(reviewSeq);
-        order.getReview().setProductId(order.getProductId());
-        order.getReview().setContent(content);
-        order.getReview().setCreateAt(now());
-
-
-        Product product = productRepository.findById(order.getProductId()).orElseThrow(
-                () -> new IllegalArgumentException()
-        );
-
-        product.setReviewCount(product.getReviewCount()+1);
-
-        return true;
     }
 }
